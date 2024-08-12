@@ -4,7 +4,7 @@ const { Parser } = require('json2csv');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 app.post('/submit', async (req, res) => {
     try {
         const { query } = req.body;
-
+        console.log(query)
         if (!query.startsWith('https://www.instagram.com')) {
             return res.status(400).send('Invalid Instagram URL. The URL must start with https://www.instagram.com');
         }
@@ -31,9 +31,12 @@ app.post('/submit', async (req, res) => {
             ownerUsername: item.ownerUsername,
             text: item.text
         }));
+        const csvData = apiResponse.data.map(item => ({
+            Username: item.ownerUsername,
+        }));
 
         const parser = new Parser();
-        const csv = parser.parse(filteredData);
+        const csv = parser.parse(csvData);
 
         const timestampWithTimezone = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
         const timestampWithoutSpaces = timestampWithTimezone.replace(/\s+/g, '');
@@ -106,6 +109,7 @@ app.post('/submit', async (req, res) => {
             <body>
                 <div class="container">
                     <h1>Instagram Comments Results</h1>
+                    <a href="data:text/csv;charset=utf-8,${encodeURIComponent(csv)}" download="${filename}" class="download-link">Download CSV</a>
                     <table>
                         <thead>
                             <tr>
@@ -124,7 +128,6 @@ app.post('/submit', async (req, res) => {
                             `).join('')}
                         </tbody>
                     </table>
-                    <a href="data:text/csv;charset=utf-8,${encodeURIComponent(csv)}" download="${filename}" class="download-link">Download CSV</a>
                 </div>
             </body>
             </html>

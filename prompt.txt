@@ -1,0 +1,25 @@
+Generate a comprehensive table for the automobile industry. The table should have two columns:
+1. Industry Segments: List various segments or sub-categories within the given industry.
+2. Materials Used: For each segment, provide a list of key materials commonly used in that specific segment.
+Please format the table as follows:
+| Industry Segment | Materials Used |
+|------------------|----------------|
+| [Segment 1]      | [Material 1, Material 2, Material 3, ...] |
+| [Segment 2]      | [Material 1, Material 2, Material 3, ...] |
+| ...              | ... |
+Ensure that:
+1. The segments are diverse and cover the main areas of the industry.
+2. The materials listed are specific to each segment and commonly used in that part of the industry.
+3. You provide as many segments as possible and as many  materials  as possible for each segment.
+4. No additional text should be generated, only csv file should be generated
+5. Materials should not be raw materials but systems like various types of brake systems.
+Example input: Automobile Industry
+Expected output format:
+| Industry Segment   | Materials Used |
+|--------------------|----------------|
+| Passenger Vehicles | [Materials list] |
+| Commercial Vehicles| [Materials list] |
+| Two-wheelers       | [Materials list] |
+| Three-wheelers     | [Materials list] |
+| Tractors           | [Materials list] |
+Please generate a similar table for the automobile industry.
