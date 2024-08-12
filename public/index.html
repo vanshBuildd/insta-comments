@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +13,6 @@
             padding: 2rem;
             margin: 0;
         }
-
         .container {
             background-color: white;
             padding: 2rem;
@@ -23,19 +21,16 @@
             width: 100%;
             max-width: 800px;
         }
-
         h1 {
             color: #2d3748;
             margin-bottom: 1.5rem;
             text-align: center;
         }
-
         #queryForm {
             display: flex;
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
-
         #queryInput {
             flex-grow: 1;
             padding: 0.75rem;
@@ -44,12 +39,10 @@
             border-radius: 4px;
             transition: border-color 0.3s ease;
         }
-
         #queryInput:focus {
             outline: none;
             border-color: #4299e1;
         }
-
         button {
             background-color: #4299e1;
             color: white;
@@ -60,32 +53,11 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         button:hover {
             background-color: #3182ce;
         }
-
-        #loading {
-            display: none;
-            text-align: center;
-            margin-top: 1rem;
-        }
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Instagram Comments Viewer</h1>
@@ -93,49 +65,6 @@
             <input type="text" id="queryInput" name="query" placeholder="Enter Instagram post URL" required>
             <button type="submit">Fetch Comments</button>
         </form>
-        <div id="loading">
-            <div class="spinner"></div>
-            <p>Loading comments...</p>
-        </div>
     </div>
-
-    <script>
-        document.getElementById('queryForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            // Show loading widget
-            document.getElementById('loading').style.display = 'block';
-
-            // Disable the submit button
-            document.querySelector('button[type="submit"]').disabled = true;
-
-            // Submit the form
-            fetch('/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    query: document.getElementById('queryInput').value
-                })
-            })
-                .then(response => response.text())
-                .then(html => {
-                    // Replace the entire page content with the received HTML
-                    document.documentElement.innerHTML = html;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while fetching data.');
-                })
-                .finally(() => {
-                    // Hide loading widget and re-enable submit button
-                    // (This will only run if there's an error, as success replaces the entire page)
-                    document.getElementById('loading').style.display = 'none';
-                    document.querySelector('button[type="submit"]').disabled = false;
-                });
-        });
-    </script>
 </body>
-
 </html>
